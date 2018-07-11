@@ -1,46 +1,33 @@
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import General, GeneralBandFilter, Selection
-from lsst.sims.ocs.configuration.proposal import general_prop_reg, SELECTION_LIMIT_TYPES
+from lsst.ts.schedulerConfig.proposal import BandFilter, SubSequence, Sequence
+from lsst.ts.schedulerConfig.proposal import sequence_prop_reg
 
-__all__ = ["WideFastDeep"]
+__all__ = ["DeepDrillingCosmology1"]
 
-@pexConfig.registerConfig("WideFastDeep", general_prop_reg, General)
-class WideFastDeep(General):
-    """This class sets the parameters for specifying the Wide, Fast, Deep proposal.
+@pexConfig.registerConfig("DeepDrillingCosmology1", sequence_prop_reg, Sequence)
+class DeepDrillingCosmology1(Sequence):
+    """This class sets the parameters for specifying the Deep Drilling Cosmology1 proposal.
     """
 
     def setDefaults(self):
         """Setup all the proposal information.
         """
-        self.name = "WideFastDeep"
+        Sequence.setDefaults(self)
+
+        self.name = "DeepDrillingCosmology1"
 
         # -------------------------
         # Sky Region specifications
         # -------------------------
 
-        # Dec Band
-        dec_limit = Selection()
-        dec_limit.limit_type = SELECTION_LIMIT_TYPES[1]
-        dec_limit.minimum_limit = -62.5
-        dec_limit.maximum_limit = 2.8
-
-        self.sky_region.selections = {0: dec_limit}
+        self.sky_user_regions = [290, 744, 1427, 2412, 2786]
 
         # -----------------------------
         # Sky Exclusion specifications
         # -----------------------------
 
         self.sky_exclusion.dec_window = 90.0
-
-        # Galactic Plane
-        gal_plane = Selection()
-        gal_plane.limit_type = SELECTION_LIMIT_TYPES[6]
-        gal_plane.minimum_limit = 0.0
-        gal_plane.maximum_limit = 10.0
-        gal_plane.bounds_limit = 90.0
-
-        self.sky_exclusion.selections = {0: gal_plane}
 
         # ---------------------------------
         # Sky Nightly Bounds specifications
@@ -56,75 +43,89 @@ class WideFastDeep(General):
         self.sky_constraints.max_airmass = 1.5
         self.sky_constraints.max_cloud = 0.7
 
+        #---------------------------
+        # Sub-sequence specification
+        #---------------------------
+
+        sseq0 = SubSequence()
+        sseq0.name = "main"
+        sseq0.filters = ['r', 'g', 'i', 'z', 'y']
+        sseq0.visits_per_filter = [20, 10, 20, 26, 20]
+        sseq0.num_events = 27
+        sseq0.num_max_missed = 0
+        sseq0.time_interval = 3 * 24 * 60 * 60
+        sseq0.time_window_start = 0.8
+        sseq0.time_window_max = 1.0
+        sseq0.time_window_end = 1.4
+        sseq0.time_weight = 1.0
+
+        sseq1 = SubSequence()
+        sseq1.name = "u-band"
+        sseq1.filters = ['u']
+        sseq1.visits_per_filter = [20]
+        sseq1.num_events = 7
+        sseq1.num_max_missed = 0
+        sseq1.time_interval = 1 * 24 * 60 * 60
+        sseq1.time_window_start = 0.8
+        sseq1.time_window_max = 1.0
+        sseq1.time_window_end = 1.4
+        sseq1.time_weight = 1.0
+
+        self.sub_sequences = {0: sseq0, 1: sseq1}
+
         # ----------------------
         # Scheduling information
         # ----------------------
 
-        self.scheduling.max_num_targets = 500
+        self.scheduling.max_num_targets = 100
         self.scheduling.accept_serendipity = False
-        self.scheduling.accept_consecutive_visits = False
+        self.scheduling.accept_consecutive_visits = True
         self.scheduling.airmass_bonus = 0.
         self.scheduling.hour_angle_bonus = 0.3
-        self.scheduling.hour_angle_max = 3.0
-        self.scheduling.time_interval = 30 * 60
-        self.scheduling.time_window_start = 0.5
-        self.scheduling.time_window_max = 1.0
-        self.scheduling.time_window_end = 2.0
-        self.scheduling.time_weight = 1.0
 
         # --------------------------
         # Band Filter specifications
         # --------------------------
 
-        u_filter = GeneralBandFilter()
+        u_filter = BandFilter()
         u_filter.name = 'u'
-        u_filter.num_visits = 75
         u_filter.bright_limit = 21.3
         u_filter.dark_limit = 30.0
         u_filter.max_seeing = 1.5
         u_filter.exposures = [15.0, 15.0]
 
-        g_filter = GeneralBandFilter()
+        g_filter = BandFilter()
         g_filter.name = 'g'
-        g_filter.num_visits = 105
-        g_filter.num_grouped_visits = 2
-        g_filter.bright_limit = 21.0
+        g_filter.bright_limit = 19.5
         g_filter.dark_limit = 30.0
         g_filter.max_seeing = 1.5
         g_filter.exposures = [15.0, 15.0]
 
-        r_filter = GeneralBandFilter()
+        r_filter = BandFilter()
         r_filter.name = 'r'
-        r_filter.num_visits = 240
-        r_filter.num_grouped_visits = 2
-        r_filter.bright_limit = 20.25
+        r_filter.bright_limit = 19.5
         r_filter.dark_limit = 30.0
         r_filter.max_seeing = 1.5
         r_filter.exposures = [15.0, 15.0]
 
-        i_filter = GeneralBandFilter()
+        i_filter = BandFilter()
         i_filter.name = 'i'
-        i_filter.num_visits = 240
-        i_filter.num_grouped_visits = 2
         i_filter.bright_limit = 19.5
         i_filter.dark_limit = 30.0
         i_filter.max_seeing = 1.5
         i_filter.exposures = [15.0, 15.0]
 
-        z_filter = GeneralBandFilter()
+        z_filter = BandFilter()
         z_filter.name = 'z'
-        z_filter.num_visits = 210
-        z_filter.num_grouped_visits = 2
-        z_filter.bright_limit = 17.0
-        z_filter.dark_limit = 21.0
+        z_filter.bright_limit = 17.5
+        z_filter.dark_limit = 30.0
         z_filter.max_seeing = 1.5
         z_filter.exposures = [15.0, 15.0]
 
-        y_filter = GeneralBandFilter()
+        y_filter = BandFilter()
         y_filter.name = 'y'
-        y_filter.num_visits = 210
-        y_filter.bright_limit = 16.5
-        y_filter.dark_limit = 21.0
+        y_filter.bright_limit = 17.5
+        y_filter.dark_limit = 30.0
         y_filter.max_seeing = 1.5
         y_filter.exposures = [15.0, 15.0]
 

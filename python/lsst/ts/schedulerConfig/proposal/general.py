@@ -1,7 +1,7 @@
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import GeneralBandFilter, GeneralScheduling
-from lsst.sims.ocs.configuration.proposal import SkyConstraints, SkyExclusion, SkyNightlyBounds, SkyRegion
+from lsst.ts.schedulerConfig.proposal import GeneralBandFilter, GeneralScheduling
+from lsst.ts.schedulerConfig.proposal import SkyConstraints, SkyExclusion, SkyNightlyBounds, SkyRegion
 
 __all__ = ["General"]
 

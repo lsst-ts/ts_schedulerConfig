@@ -4,9 +4,9 @@ import sys
 
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration import Downtime, Environment, load_config, Observatory, ObservingSite
-from lsst.sims.ocs.configuration import SchedulerDriver, ScienceProposals, Survey
-from lsst.sims.ocs.utilities import expand_path
+from lsst.ts.schedulerConfig import Downtime, Environment, load_config, Observatory, ObservingSite
+from lsst.ts.schedulerConfig import SchedulerDriver, ScienceProposals, Survey
+from lsst.ts.schedulerConfig.utilities import expand_path
 
 __all__ = ["SimulationConfig"]
 

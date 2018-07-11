@@ -1,0 +1,5 @@
+setupRequired(python)
+setupRequired(python_future)
+setupRequired(pex_config)
+
+envPrepend(PYTHONPATH, ${PRODUCT_DIR}/python)

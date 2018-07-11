@@ -1,6 +1,6 @@
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import BandFilter
+from lsst.ts.schedulerConfig.proposal import BandFilter
 
 __all__ = ["GeneralBandFilter"]
 

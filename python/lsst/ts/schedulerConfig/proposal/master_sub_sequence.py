@@ -1,6 +1,6 @@
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import BaseSequence, SubSequence
+from lsst.ts.schedulerConfig.proposal import BaseSequence, SubSequence
 
 __all__ = ["MasterSubSequence"]
 

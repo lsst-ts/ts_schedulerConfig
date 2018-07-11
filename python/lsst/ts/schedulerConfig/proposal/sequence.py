@@ -1,7 +1,7 @@
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import BandFilter, MasterSubSequence, SequenceScheduling
-from lsst.sims.ocs.configuration.proposal import SkyConstraints, SkyExclusion, SkyNightlyBounds, SubSequence
+from lsst.ts.schedulerConfig.proposal import BandFilter, MasterSubSequence, SequenceScheduling
+from lsst.ts.schedulerConfig.proposal import SkyConstraints, SkyExclusion, SkyNightlyBounds, SubSequence
 
 __all__ = ["Sequence"]
 

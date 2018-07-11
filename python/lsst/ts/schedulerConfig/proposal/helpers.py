@@ -2,7 +2,7 @@ import importlib
 
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import General, Sequence
+from lsst.ts.schedulerConfig.proposal import General, Sequence
 
 __all__ = ["general_prop_reg", "load_class", "sequence_prop_reg"]
 

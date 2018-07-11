@@ -1,6 +1,6 @@
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration.proposal import Selection
+from lsst.ts.schedulerConfig.proposal import Selection
 
 __all__ = ["SkyExclusion"]
 

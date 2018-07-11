@@ -2,7 +2,7 @@ from builtins import object
 import logging
 import time
 
-from lsst.sims.ocs.utilities.socs_exceptions import SchedulerTimeoutError
+from lsst.ts.schedulerConfig.utilities.socs_exceptions import SchedulerTimeoutError
 
 __all__ = ["ConfigurationCommunicator"]
 

@@ -4,9 +4,9 @@ import sys
 
 import lsst.pex.config as pexConfig
 
-from lsst.sims.ocs.configuration import load_config
-from lsst.sims.ocs.configuration.proposal import general_prop_reg, sequence_prop_reg
-from lsst.sims.ocs.utilities.socs_exceptions import NoProposalsConfiguredError
+from lsst.ts.schedulerConfig import load_config
+from lsst.ts.schedulerConfig.proposal import general_prop_reg, sequence_prop_reg
+from lsst.ts.schedulerConfig.utilities.socs_exceptions import NoProposalsConfiguredError
 
 __all__ = ["ScienceProposals"]
 
