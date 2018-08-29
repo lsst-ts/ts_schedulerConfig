@@ -18,7 +18,7 @@ class SchedulerDriver(pexConfig.Config):
                                                           "internal state.",
                                                   "COLD": "Rebuilds scheduler state from observation database.", })
     startup_database = pexConfig.Field("Path to the file holding scheduler state or observation database "
-                                       "to be used on WARM or COLD start.", str)
+                                       "to be used on WARM or COLD start.", str, default='')
 
     # Proposal based Scheduler configurations (May be removed in the future)
     coadd_values = pexConfig.Field('Flag to determine if two identical field/filter targets have their '
@@ -64,6 +64,8 @@ class SchedulerDriver(pexConfig.Config):
         self.ignore_seeing = False
         self.lookahead_window_size = 0
         self.lookahead_bonus_weight = 0
+        self.startup_type = 'HOT'
+        self.startup_database = ''
 
     def validate(self):
         """Validate configuration parameters.
