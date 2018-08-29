@@ -6,6 +6,21 @@ class SchedulerDriver(pexConfig.Config):
     """Configuration of the LSST Scheduler's Driver.
     """
 
+    # Actual global driver configuration parameters
+    night_boundary = pexConfig.Field('Solar altitude (degrees) when it is considered night.', float)
+    new_moon_phase_threshold = pexConfig.Field('New moon phase threshold for swapping to dark time filter.',
+                                               float)
+    startup_type = pexConfig.ChoiceField("The method used to startup the scheduler.", str,
+                                         default='HOT',
+                                         allowed={"HOT": "Hot start, this means the scheduler is started up from "
+                                                         "scratch",
+                                                  "WARM": "Reads the scheduler state from a previously saved "
+                                                          "internal state.",
+                                                  "COLD": "Rebuilds scheduler state from observation database.", })
+    startup_database = pexConfig.Field("Path to the file holding scheduler state or observation database "
+                                       "to be used on WARM or COLD start.", str)
+
+    # Proposal based Scheduler configurations (May be removed in the future)
     coadd_values = pexConfig.Field('Flag to determine if two identical field/filter targets have their '
                                    'ranks added and then considered as one target.', bool)
     time_balancing = pexConfig.Field('Flag to detemine if cross-proposal time-balancing is used.', bool)
@@ -21,9 +36,6 @@ class SchedulerDriver(pexConfig.Config):
                                         'result.', float)
     propboost_weight = pexConfig.Field('The weighting value to apply to the time balancing equations. This '
                                        'parameter should be greater than or equal to zero.', float)
-    night_boundary = pexConfig.Field('Solar altitude (degrees) when it is considered night.', float)
-    new_moon_phase_threshold = pexConfig.Field('New moon phase threshold for swapping to dark time filter.',
-                                               float)
     ignore_sky_brightness = pexConfig.Field('Flag to ignore sky brightness limits when rejecting targets.',
                                             bool)
     ignore_airmass = pexConfig.Field('Flag to ignore airmass limits when rejecting targets.', bool)
