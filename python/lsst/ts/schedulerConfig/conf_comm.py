@@ -60,15 +60,15 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_schedulerConfig(self.sched_conf)
                 self.log.debug('[rcode:%i] - Listening for schedulerConfig...' % rcode)
-                if rcode == 0 and self.sched_conf.survey_duration != 0:
-                    self.log.info("run: rx scheduler config survey_duration=%.1f" % self.sched_conf.survey_duration)
+                if rcode == 0 and self.sched_conf.surveyDuration != 0:
+                    self.log.info("run: rx scheduler config survey_duration=%.1f" % self.sched_conf.surveyDuration)
                     break
                 else:
                     tf = time.time()
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!")
 
-            self.config.survey.duration = self.sched_conf.survey_duration
+            self.config.survey.duration = self.sched_conf.surveyDuration
 
     def _configure_scheduler_driver(self):
         """Configure and the Scheduler Driver configuration topic.
@@ -83,7 +83,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_driverConfig(self.sched_driver_conf)
                 self.log.debug('[rcode:%i] - Listening for driverConfig...' % rcode)
-                if rcode == 0 and self.sched_driver_conf.timecost_time_max > 0:
+                if rcode == 0 and self.sched_driver_conf.timecostTimeMax > 0:
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler driver config %s" % self.config.sched_driver)
                     break
@@ -92,22 +92,22 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!!")
 
-            self.config.sched_driver.coadd_values = bool(self.sched_driver_conf.coadd_values)
-            self.config.sched_driver.time_balancing = bool(self.sched_driver_conf.time_balancing)
-            self.config.sched_driver.timecost_time_max = self.sched_driver_conf.timecost_time_max
-            self.config.sched_driver.timecost_time_ref = self.sched_driver_conf.timecost_time_ref
-            self.config.sched_driver.timecost_cost_ref = self.sched_driver_conf.timecost_cost_ref
-            self.config.sched_driver.timecost_weight = self.sched_driver_conf.timecost_weight
-            self.config.sched_driver.filtercost_weight = self.sched_driver_conf.filtercost_weight
-            self.config.sched_driver.propboost_weight = self.sched_driver_conf.propboost_weight
-            self.config.sched_driver.night_boundary = self.sched_driver_conf.night_boundary
-            self.config.sched_driver.new_moon_phase_threshold = self.sched_driver_conf.new_moon_phase_threshold
-            self.config.sched_driver.ignore_sky_brightness = bool(self.sched_driver_conf.ignore_sky_brightness)
-            self.config.sched_driver.ignore_airmass = bool(self.sched_driver_conf.ignore_airmass)
-            self.config.sched_driver.ignore_clouds = bool(self.sched_driver_conf.ignore_clouds)
-            self.config.sched_driver.ignore_seeing = bool(self.sched_driver_conf.ignore_seeing)
-            self.config.sched_driver.lookahead_window_size = self.sched_driver_conf.lookahead_window_size
-            self.config.sched_driver.lookahead_bonus_weight = self.sched_driver_conf.lookahead_bonus_weight
+            self.config.sched_driver.coadd_values = bool(self.sched_driver_conf.coaddValues)
+            self.config.sched_driver.time_balancing = bool(self.sched_driver_conf.timeBalancing)
+            self.config.sched_driver.timecost_time_max = self.sched_driver_conf.timecostTimeMax
+            self.config.sched_driver.timecost_time_ref = self.sched_driver_conf.timecostTimeRef
+            self.config.sched_driver.timecost_cost_ref = self.sched_driver_conf.timecostCostRef
+            self.config.sched_driver.timecost_weight = self.sched_driver_conf.timecostWeight
+            self.config.sched_driver.filtercost_weight = self.sched_driver_conf.filtercostWeight
+            self.config.sched_driver.propboost_weight = self.sched_driver_conf.propboostWeight
+            self.config.sched_driver.night_boundary = self.sched_driver_conf.nightBoundary
+            self.config.sched_driver.new_moon_phase_threshold = self.sched_driver_conf.newMoonPhaseThreshold
+            self.config.sched_driver.ignore_sky_brightness = bool(self.sched_driver_conf.ignoreSkyBrightness)
+            self.config.sched_driver.ignore_airmass = bool(self.sched_driver_conf.ignoreAirmass)
+            self.config.sched_driver.ignore_clouds = bool(self.sched_driver_conf.ignoreClouds)
+            self.config.sched_driver.ignore_seeing = bool(self.sched_driver_conf.ignoreSeeing)
+            self.config.sched_driver.lookahead_window_size = int(self.sched_driver_conf.lookaheadWindowSize)
+            self.config.sched_driver.lookahead_bonus_weight = self.sched_driver_conf.lookaheadBonusWeight
 
     def _configure_observing_site(self):
         """Configure and send the Observing Site configuration topic.
@@ -137,7 +137,7 @@ class ConfigurationCommunicator(object):
             self.config.observing_site.height = self.obs_site_conf.height
             self.config.observing_site.pressure = self.obs_site_conf.pressure
             self.config.observing_site.temperature = self.obs_site_conf.temperature
-            self.config.observing_site.relative_humidity = self.obs_site_conf.relative_humidity
+            self.config.observing_site.relative_humidity = self.obs_site_conf.relativeHumidity
 
     def _configure_telescope(self):
         """Configure and send the Telescope configuration topic.
@@ -152,7 +152,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_telescopeConfig(self.tel_conf)
                 self.log.debug('[rcode:%i] - Listening for telescopeConfig...' % rcode)
-                if rcode == 0 and self.tel_conf.altitude_minpos >= 0:
+                if rcode == 0 and self.tel_conf.altitudeMinpos >= 0:
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler telescope config")
                     break
@@ -161,17 +161,17 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!!")
 
-            self.config.observatory.telescope.altitude_minpos = self.tel_conf.altitude_minpos
-            self.config.observatory.telescope.altitude_maxpos = self.tel_conf.altitude_maxpos
-            self.config.observatory.telescope.altitude_maxspeed = self.tel_conf.altitude_maxspeed
-            self.config.observatory.telescope.altitude_accel = self.tel_conf.altitude_accel
-            self.config.observatory.telescope.altitude_decel = self.tel_conf.altitude_decel
-            self.config.observatory.telescope.azimuth_minpos = self.tel_conf.azimuth_minpos
-            self.config.observatory.telescope.azimuth_maxpos = self.tel_conf.azimuth_maxpos
-            self.config.observatory.telescope.azimuth_maxspeed = self.tel_conf.azimuth_maxspeed
-            self.config.observatory.telescope.azimuth_accel = self.tel_conf.azimuth_accel
-            self.config.observatory.telescope.azimuth_decel = self.tel_conf.azimuth_decel
-            self.config.observatory.telescope.settle_time = self.tel_conf.settle_time
+            self.config.observatory.telescope.altitude_minpos = self.tel_conf.altitudeMinpos
+            self.config.observatory.telescope.altitude_maxpos = self.tel_conf.altitudeMaxpos
+            self.config.observatory.telescope.altitude_maxspeed = self.tel_conf.altitudeMaxspeed
+            self.config.observatory.telescope.altitude_accel = self.tel_conf.altitudeAccel
+            self.config.observatory.telescope.altitude_decel = self.tel_conf.altitudeDecel
+            self.config.observatory.telescope.azimuth_minpos = self.tel_conf.azimuthMinpos
+            self.config.observatory.telescope.azimuth_maxpos = self.tel_conf.azimuthMaxpos
+            self.config.observatory.telescope.azimuth_maxspeed = self.tel_conf.azimuthMaxspeed
+            self.config.observatory.telescope.azimuth_accel = self.tel_conf.azimuthAccel
+            self.config.observatory.telescope.azimuth_decel = self.tel_conf.azimuthDecel
+            self.config.observatory.telescope.settle_time = self.tel_conf.settleTime
 
     def _configure_dome(self):
         """Configure and send the dome configuration topic.
@@ -186,7 +186,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_domeConfig(self.dome_conf)
                 self.log.debug('[rcode:%i] - Listening for domeConfig...' % rcode)
-                if rcode == 0 and self.dome_conf.altitude_maxspeed >= 0:
+                if rcode == 0 and self.dome_conf.altitudeMaxspeed >= 0:
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler dome config")
                     break
@@ -195,15 +195,15 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!!")
 
-            self.config.observatory.dome.altitude_maxspeed = self.dome_conf.altitude_maxspeed
-            self.config.observatory.dome.altitude_accel = self.dome_conf.altitude_accel
-            self.config.observatory.dome.altitude_decel = self.dome_conf.altitude_decel
-            self.config.observatory.dome.altitude_freerange = self.dome_conf.altitude_freerange
-            self.config.observatory.dome.azimuth_maxspeed = self.dome_conf.azimuth_maxspeed
-            self.config.observatory.dome.azimuth_accel = self.dome_conf.azimuth_accel
-            self.config.observatory.dome.azimuth_decel = self.dome_conf.azimuth_decel
-            self.config.observatory.dome.azimuth_freerange = self.dome_conf.azimuth_freerange
-            self.config.observatory.dome.settle_time = self.dome_conf.settle_time
+            self.config.observatory.dome.altitude_maxspeed = self.dome_conf.altitudeMaxspeed
+            self.config.observatory.dome.altitude_accel = self.dome_conf.altitudeAccel
+            self.config.observatory.dome.altitude_decel = self.dome_conf.altitudeDecel
+            self.config.observatory.dome.altitude_freerange = self.dome_conf.altitudeFreerange
+            self.config.observatory.dome.azimuth_maxspeed = self.dome_conf.azimuthMaxspeed
+            self.config.observatory.dome.azimuth_accel = self.dome_conf.azimuthAccel
+            self.config.observatory.dome.azimuth_decel = self.dome_conf.azimuthDecel
+            self.config.observatory.dome.azimuth_freerange = self.dome_conf.azimuthFreerange
+            self.config.observatory.dome.settle_time = self.dome_conf.settleTime
 
     def _configure_rotator(self):
         """Configure and send the rotator configuration topic.
@@ -229,12 +229,12 @@ class ConfigurationCommunicator(object):
 
             self.config.observatory.rotator.minpos = self.rot_conf.minpos
             self.config.observatory.rotator.maxpos = self.rot_conf.maxpos
-            self.config.observatory.rotator.filter_change_pos = self.rot_conf.filter_change_pos
+            self.config.observatory.rotator.filter_change_pos = self.rot_conf.filterChangePos
             self.config.observatory.rotator.maxspeed = self.rot_conf.maxspeed
             self.config.observatory.rotator.accel = self.rot_conf.accel
             self.config.observatory.rotator.decel = self.rot_conf.decel
             self.config.observatory.rotator.follow_sky = bool(self.rot_conf.followsky)
-            self.config.observatory.rotator.resume_angle = bool(self.rot_conf.resume_angle)
+            self.config.observatory.rotator.resume_angle = bool(self.rot_conf.resumeAngle)
 
     def _configure_camera(self):
         """Configure and send the camera configuration topic.
@@ -249,7 +249,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_cameraConfig(self.cam_conf)
                 self.log.debug('[rcode:%i] - Listening for cameraConfig...' % rcode)
-                if rcode == 0 and self.cam_conf.readout_time > 0:
+                if rcode == 0 and self.cam_conf.readoutTime > 0:
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler camera config")
                     break
@@ -258,18 +258,18 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!!")
 
-            self.config.observatory.camera.readout_time = self.cam_conf.readout_time
-            self.config.observatory.camera.shutter_time = self.cam_conf.shutter_time
-            self.config.observatory.camera.filter_mount_time = self.cam_conf.filter_mount_time
-            self.config.observatory.camera.filter_change_time = self.cam_conf.filter_change_time
-            self.config.observatory.camera.filter_max_changes_burst_num = self.cam_conf.filter_max_changes_burst_num
-            self.config.observatory.camera.filter_max_changes_burst_time = self.cam_conf.filter_max_changes_burst_time
-            self.config.observatory.camera.filter_max_changes_avg_num = self.cam_conf.filter_max_changes_avg_num
-            self.config.observatory.camera.filter_max_changes_avg_time = self.cam_conf.filter_max_changes_avg_time
-            self.config.observatory.camera.filter_mounted = self.cam_conf.filter_mounted.split(',')
-            self.config.observatory.camera.filter_pos = self.cam_conf.filter_pos
-            self.config.observatory.camera.filter_removable = self.cam_conf.filter_removable.split(',')
-            self.config.observatory.camera.filter_unmounted = self.cam_conf.filter_unmounted.split(',')
+            self.config.observatory.camera.readout_time = self.cam_conf.readoutTime
+            self.config.observatory.camera.shutter_time = self.cam_conf.shutterTime
+            self.config.observatory.camera.filter_mount_time = self.cam_conf.filterMountTime
+            self.config.observatory.camera.filter_change_time = self.cam_conf.filterChangeTime
+            self.config.observatory.camera.filter_max_changes_burst_num = int(self.cam_conf.filterMaxChangesBurstNum)
+            self.config.observatory.camera.filter_max_changes_burst_time = self.cam_conf.filterMaxChangesBurstTime
+            self.config.observatory.camera.filter_max_changes_avg_num = self.cam_conf.filterMaxChangesAvgNum
+            self.config.observatory.camera.filter_max_changes_avg_time = self.cam_conf.filterMaxChangesAvgTime
+            self.config.observatory.camera.filter_mounted = self.cam_conf.filterMounted.split(',')
+            self.config.observatory.camera.filter_pos = self.cam_conf.filterPos
+            self.config.observatory.camera.filter_removable = self.cam_conf.filterRemovable.split(',')
+            self.config.observatory.camera.filter_unmounted = self.cam_conf.filterUnmounted.split(',')
 
     def _configure_slew(self):
         """Configure and send the slew configuration topic.
@@ -284,7 +284,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_slewConfig(self.slew_conf)
                 self.log.debug('[rcode:%i] - Listening for slewConfig...' % rcode)
-                if rcode == 0 and self.slew_conf.prereq_exposures != "":
+                if rcode == 0 and self.slew_conf.prereqExposures != "":
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler slew config")
                     break
@@ -293,36 +293,36 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!!")
 
-            self.config.observatory.slew.prereq_domaz = self.slew_conf.prereq_domaz.split(',') if len(
-                self.slew_conf.prereq_domaz) > 0 else []
-            self.config.observatory.slew.prereq_telalt = self.slew_conf.prereq_telalt.split(',') if len(
-                self.slew_conf.prereq_telalt) > 0 else []
-            self.config.observatory.slew.prereq_telaz = self.slew_conf.prereq_telaz.split(',') if len(
-                self.slew_conf.prereq_telaz) > 0 else []
-            self.config.observatory.slew.prereq_telopticsopenloop = self.slew_conf.prereq_telopticsopenloop.split(
-                ',') if len(self.slew_conf.prereq_telopticsopenloop) > 0 else []
-            self.config.observatory.slew.prereq_telopticsclosedloop = self.slew_conf.prereq_telopticsclosedloop.split(
-                ',') if len(self.slew_conf.prereq_telopticsclosedloop) > 0 else []
-            self.config.observatory.slew.prereq_telrot = self.slew_conf.prereq_telrot.split(',') if len(
-                self.slew_conf.prereq_telrot) > 0 else []
-            self.config.observatory.slew.prereq_filter = self.slew_conf.prereq_filter.split(',') if len(
-                self.slew_conf.prereq_filter) > 0 else []
-            self.config.observatory.slew.prereq_adc = self.slew_conf.prereq_adc.split(',') if len(
-                self.slew_conf.prereq_adc) > 0 else []
-            self.config.observatory.slew.prereq_ins_optics = self.slew_conf.prereq_ins_optics.split(',') if len(
-                self.slew_conf.prereq_ins_optics) > 0 else []
-            self.config.observatory.slew.prereq_guider_pos = self.slew_conf.prereq_guider_pos.split(',') if len(
-                self.slew_conf.prereq_guider_pos) > 0 else []
-            self.config.observatory.slew.prereq_guider_adq = self.slew_conf.prereq_guider_adq.split(',') if len(
-                self.slew_conf.prereq_guider_adq) > 0 else []
-            self.config.observatory.slew.prereq_telsettle = self.slew_conf.prereq_telsettle.split(',') if len(
-                self.slew_conf.prereq_telsettle) > 0 else []
-            self.config.observatory.slew.prereq_domazsettle = self.slew_conf.prereq_domazsettle.split(',') if len(
-                self.slew_conf.prereq_domazsettle) > 0 else []
-            self.config.observatory.slew.prereq_exposures = self.slew_conf.prereq_exposures.split(',') if len(
-                self.slew_conf.prereq_exposures) > 0 else []
-            self.config.observatory.slew.prereq_readout = self.slew_conf.prereq_readout.split(',') if len(
-                self.slew_conf.prereq_readout) > 0 else []
+            self.config.observatory.slew.prereq_domaz = self.slew_conf.prereqDomaz.split(',') if len(
+                self.slew_conf.prereqDomaz) > 0 else []
+            self.config.observatory.slew.prereq_telalt = self.slew_conf.prereqTelalt.split(',') if len(
+                self.slew_conf.prereqTelalt) > 0 else []
+            self.config.observatory.slew.prereq_telaz = self.slew_conf.prereqTelaz.split(',') if len(
+                self.slew_conf.prereqTelaz) > 0 else []
+            self.config.observatory.slew.prereq_telopticsopenloop = self.slew_conf.prereqTelOpticsOpenLoop.split(
+                ',') if len(self.slew_conf.prereqTelOpticsOpenLoop) > 0 else []
+            self.config.observatory.slew.prereq_telopticsclosedloop = self.slew_conf.prereqTelOpticsClosedLoop.split(
+                ',') if len(self.slew_conf.prereqTelOpticsClosedLoop) > 0 else []
+            self.config.observatory.slew.prereq_telrot = self.slew_conf.prereqTelRot.split(',') if len(
+                self.slew_conf.prereqTelRot) > 0 else []
+            self.config.observatory.slew.prereq_filter = self.slew_conf.prereqFilter.split(',') if len(
+                self.slew_conf.prereqFilter) > 0 else []
+            self.config.observatory.slew.prereq_adc = self.slew_conf.prereqAdc.split(',') if len(
+                self.slew_conf.prereqAdc) > 0 else []
+            self.config.observatory.slew.prereq_ins_optics = self.slew_conf.prereqInsOptics.split(',') if len(
+                self.slew_conf.prereqInsOptics) > 0 else []
+            self.config.observatory.slew.prereq_guider_pos = self.slew_conf.prereqGuiderPos.split(',') if len(
+                self.slew_conf.prereqGuiderPos) > 0 else []
+            self.config.observatory.slew.prereq_guider_adq = self.slew_conf.prereqGuiderAdq.split(',') if len(
+                self.slew_conf.prereqGuiderAdq) > 0 else []
+            self.config.observatory.slew.prereq_telsettle = self.slew_conf.prereqTelSettle.split(',') if len(
+                self.slew_conf.prereqTelSettle) > 0 else []
+            self.config.observatory.slew.prereq_domazsettle = self.slew_conf.prereqDomazSettle.split(',') if len(
+                self.slew_conf.prereqDomazSettle) > 0 else []
+            self.config.observatory.slew.prereq_exposures = self.slew_conf.prereqExposures.split(',') if len(
+                self.slew_conf.prereqExposures) > 0 else []
+            self.config.observatory.slew.prereq_readout = self.slew_conf.prereqReadout.split(',') if len(
+                self.slew_conf.prereqReadout) > 0 else []
 
     def _configure_optics_loop_corr(self):
         """Configure and send the optics loop correction configuration topic.
@@ -337,7 +337,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_opticsLoopCorrConfig(self.olc_conf)
                 self.log.debug('[rcode:%i] - Listening for opticsLoopCorrConfig...' % rcode)
-                if rcode == 0 and self.olc_conf.tel_optics_ol_slope > 0:
+                if rcode == 0 and self.olc_conf.telOpticsOlSlope > 0:
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler optics config")
                     break
@@ -346,10 +346,10 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!!")
 
-            self.config.observatory.optics_loop_corr.tel_optics_ol_slope = self.olc_conf.tel_optics_ol_slope
+            self.config.observatory.optics_loop_corr.tel_optics_ol_slope = self.olc_conf.telOpticsOlSlope
 
-            self.config.observatory.optics_loop_corr.tel_optics_cl_alt_limit = self.olc_conf.tel_optics_cl_alt_limit
-            self.config.observatory.optics_loop_corr.tel_optics_cl_delay = self.olc_conf.tel_optics_cl_delay
+            self.config.observatory.optics_loop_corr.tel_optics_cl_alt_limit = self.olc_conf.telOpticsClAltLimit
+            self.config.observatory.optics_loop_corr.tel_optics_cl_delay = self.olc_conf.telOpticsClDelay
 
     def _configure_park(self):
         """Configure and send the park position configuration.
@@ -364,7 +364,7 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_parkConfig(self.park_conf)
                 self.log.debug('[rcode:%i] - Listening for parkConfig...' % rcode)
-                if rcode == 0 and self.park_conf.telescope_altitude > 0:
+                if rcode == 0 and self.park_conf.telescopeAltitude > 0:
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler park config")
                     break
@@ -373,12 +373,12 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!")
 
-            self.config.observatory.park.telescope_altitude = self.park_conf.telescope_altitude
-            self.config.observatory.park.telescope_azimuth = self.park_conf.telescope_azimuth
-            self.config.observatory.park.telescope_rotator = self.park_conf.telescope_rotator
-            self.config.observatory.park.dome_altitude = self.park_conf.dome_altitude
-            self.config.observatory.park.dome_azimuth = self.park_conf.dome_azimuth
-            self.config.observatory.park.filter_position = self.park_conf.filter_position
+            self.config.observatory.park.telescope_altitude = self.park_conf.telescopeAltitude
+            self.config.observatory.park.telescope_azimuth = self.park_conf.telescopeAzimuth
+            self.config.observatory.park.telescope_rotator = self.park_conf.telescopeRotator
+            self.config.observatory.park.dome_altitude = self.park_conf.domeAltitude
+            self.config.observatory.park.dome_azimuth = self.park_conf.domeAzimuth
+            self.config.observatory.park.filter_position = self.park_conf.filterPosition
 
     def _configure_proposals(self):
         """Publish the general and sequence proposals.
@@ -393,8 +393,8 @@ class ConfigurationCommunicator(object):
             while True:
                 rcode = self.sal.manager.getNextSample_surveyTopology(self.topology_conf)
                 self.log.debug('[rcode:%i] - Listening for surveyTopology...' % rcode)
-                if rcode == 0 and (self.topology_conf.num_general_props > 0 or
-                                   self.topology_conf.num_sequence_props > 0):
+                if rcode == 0 and (self.topology_conf.numGeneralProps > 0 or
+                                   self.topology_conf.numSequenceProps > 0):
                     # config_dict = self.sal.rtopic_driver_config(self.sal.topic_driverConfig)
                     self.log.info("run: rx scheduler topology config")
                     break
@@ -403,9 +403,9 @@ class ConfigurationCommunicator(object):
                     if (tf - lasttime) > self.socs_timeout:
                         raise SchedulerTimeoutError("No configuration received from Scheduler!")
 
-            self.num_proposals = self.topology_conf.num_general_props+self.topology_conf.num_seq_props
-            self.survey_topology['general'] = self.topology_conf.general_propos.split(',')
-            self.survey_topology['sequence'] = self.topology_conf.sequence_propos.split(',')
+            self.num_proposals = self.topology_conf.numGeneralProps+self.topology_conf.numSeqProps
+            self.survey_topology['general'] = self.topology_conf.generalPropos.split(',')
+            self.survey_topology['sequence'] = self.topology_conf.sequencePropos.split(',')
 
     def configure(self):
         """Configure all publish topics for the configuration communicator.

@@ -97,87 +97,87 @@ class General(pexConfig.Config):
         """
         topic.name = self.name if self.name is not None else "None"
 
-        topic.twilight_boundary = self.sky_nightly_bounds.twilight_boundary
-        topic.delta_lst = self.sky_nightly_bounds.delta_lst
-        topic.dec_window = self.sky_exclusion.dec_window
-        topic.max_airmass = self.sky_constraints.max_airmass
-        topic.max_cloud = self.sky_constraints.max_cloud
-        topic.min_distance_moon = self.sky_constraints.min_distance_moon
-        topic.exclude_planets = self.sky_constraints.exclude_planets
+        topic.twilightBoundary = self.sky_nightly_bounds.twilight_boundary
+        topic.deltaLst = self.sky_nightly_bounds.delta_lst
+        topic.decWindow = self.sky_exclusion.dec_window
+        topic.maxAirmass = self.sky_constraints.max_airmass
+        topic.maxCloud = self.sky_constraints.max_cloud
+        topic.minDistanceMoon = self.sky_constraints.min_distance_moon
+        topic.excludePlanets = self.sky_constraints.exclude_planets
 
         num_region_selections = len(self.sky_region.selections) \
             if self.sky_region.selections is not None else 0
-        topic.num_region_selections = num_region_selections
+        topic.numRegionSelections = num_region_selections
         if num_region_selections:
             limit_types = []
             for i, v in enumerate(self.sky_region.selections.values()):
                 limit_types.append(v.limit_type)
-                topic.region_minimums[i] = v.minimum_limit
-                topic.region_maximums[i] = v.maximum_limit
-                topic.region_bounds[i] = v.bounds_limit
-            topic.region_types = ','.join(limit_types)
+                topic.regionMinimums[i] = v.minimum_limit
+                topic.regionMaximums[i] = v.maximum_limit
+                topic.regionBounds[i] = v.bounds_limit
+            topic.regionTypes = ','.join(limit_types)
 
-        topic.region_combiners = ','.join(self.sky_region.combiners)
+        topic.regionCombiners = ','.join(self.sky_region.combiners)
 
         num_time_ranges = len(self.sky_region.time_ranges) if self.sky_region.time_ranges is not None else 0
-        topic.num_time_ranges = num_time_ranges
+        topic.numTimeRanges = num_time_ranges
         if num_time_ranges:
             for i, v in enumerate(self.sky_region.time_ranges.values()):
-                topic.time_range_starts[i] = v.start
-                topic.time_range_ends[i] = v.end
+                topic.timeRangeStarts[i] = v.start
+                topic.timeRangeEnds[i] = v.end
 
         num_selection_mappings = len(self.sky_region.selection_mapping) \
             if self.sky_region.selection_mapping is not None else 0
         if num_selection_mappings:
             selection_index = 0
             for i, v in enumerate(self.sky_region.selection_mapping.values()):
-                topic.num_selection_mappings[i] = len(v.indexes)
+                topic.numSelectionMappings[i] = len(v.indexes)
                 for index in v.indexes:
-                    topic.selection_mappings[selection_index] = index
+                    topic.selectionMappings[selection_index] = index
                     selection_index += 1
 
         num_exclusion_selections = len(self.sky_exclusion.selections) \
             if self.sky_exclusion.selections is not None else 0
-        topic.num_exclusion_selections = num_exclusion_selections
+        topic.numExclusionSelections = num_exclusion_selections
         if num_exclusion_selections:
             limit_types = []
             for i, v in enumerate(self.sky_exclusion.selections.values()):
                 limit_types.append(v.limit_type)
-                topic.exclusion_minimums[i] = v.minimum_limit
-                topic.exclusion_maximums[i] = v.maximum_limit
-                topic.exclusion_bounds[i] = v.bounds_limit
-            topic.exclusion_types = ','.join(limit_types)
+                topic.exclusionMinimums[i] = v.minimum_limit
+                topic.exclusionMaximums[i] = v.maximum_limit
+                topic.exclusionBounds[i] = v.bounds_limit
+            topic.exclusionTypes = ','.join(limit_types)
 
-        topic.num_filters = len(self.filters) if self.filters is not None else 0
-        if topic.num_filters:
+        topic.numFilters = len(self.filters) if self.filters is not None else 0
+        if topic.numFilters:
             filter_names = []
             exp_index = 0
             for i, v in enumerate(self.filters.values()):
                 filter_names.append(v.name)
-                topic.num_visits[i] = v.num_visits
-                topic.num_grouped_visits[i] = v.num_grouped_visits
-                topic.max_grouped_visits[i] = v.max_grouped_visits
-                topic.bright_limit[i] = v.bright_limit
-                topic.dark_limit[i] = v.dark_limit
-                topic.max_seeing[i] = v.max_seeing
-                topic.num_filter_exposures[i] = len(v.exposures)
+                topic.numVisits[i] = v.num_visits
+                topic.numGroupedVisits[i] = v.num_grouped_visits
+                topic.maxGroupedVisits[i] = v.max_grouped_visits
+                topic.brightLimit[i] = v.bright_limit
+                topic.darkLimit[i] = v.dark_limit
+                topic.maxSeeing[i] = v.max_seeing
+                topic.numFilterExposures[i] = len(v.exposures)
                 for exposure in v.exposures:
                     topic.exposures[exp_index] = exposure
                     exp_index += 1
-            topic.filter_names = ','.join(filter_names)
+            topic.filterNames = ','.join(filter_names)
 
-        topic.max_num_targets = self.scheduling.max_num_targets
-        topic.accept_serendipity = self.scheduling.accept_serendipity
-        topic.accept_consecutive_visits = self.scheduling.accept_consecutive_visits
-        topic.airmass_bonus = self.scheduling.airmass_bonus
-        topic.hour_angle_bonus = self.scheduling.hour_angle_bonus
-        topic.hour_angle_max = self.scheduling.hour_angle_max
-        topic.restrict_grouped_visits = self.scheduling.restrict_grouped_visits
-        topic.time_interval = self.scheduling.time_interval
-        topic.time_window_start = self.scheduling.time_window_start
-        topic.time_window_max = self.scheduling.time_window_max
-        topic.time_window_end = self.scheduling.time_window_end
-        topic.time_weight = self.scheduling.time_weight
-        topic.field_revisit_limit = self.scheduling.field_revisit_limit
+        topic.maxNumTargets = self.scheduling.max_num_targets
+        topic.acceptSerendipity = self.scheduling.accept_serendipity
+        topic.acceptConsecutiveVisits = self.scheduling.accept_consecutive_visits
+        topic.airmassBonus = self.scheduling.airmass_bonus
+        topic.hourAngleBonus = self.scheduling.hour_angle_bonus
+        topic.hourAngleMax = self.scheduling.hour_angle_max
+        topic.restrictGroupedVisits = self.scheduling.restrict_grouped_visits
+        topic.timeInterval = self.scheduling.time_interval
+        topic.timeWindowStart = self.scheduling.time_window_start
+        topic.timeWindowMax = self.scheduling.time_window_max
+        topic.timeWindowEnd = self.scheduling.time_window_end
+        topic.timeWeight = self.scheduling.time_weight
+        topic.fieldRevisitLimit = self.scheduling.field_revisit_limit
 
         return topic

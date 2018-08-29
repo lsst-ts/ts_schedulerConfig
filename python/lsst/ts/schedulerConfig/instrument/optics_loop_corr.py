@@ -1,3 +1,5 @@
+import re
+
 import lsst.pex.config as pexConfig
 
 __all__ = ["OpticsLoopCorr"]
@@ -34,6 +36,15 @@ class OpticsLoopCorr(pexConfig.Config):
             The name of the topic parameter to fill.
         """
         array = getattr(conf, param)
-        local_param = getattr(self, param)
+        local_param = getattr(self, self.camelcase_to_snakecase(param))
         for i, v in enumerate(local_param):
             array[i] = v
+
+    def camelcase_to_snakecase(self, name):
+        """This method is a result of legacy code. Originally snake case
+        was used as the DDS topics. set_array() expects the topic and the
+        class attribute to be identical, because of this it was easier to
+        convert the topic back into snake case than to change the legacy
+        code. Perhaps we can polish and remove this method at a future time."""
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()

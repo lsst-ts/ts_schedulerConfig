@@ -1,0 +1,43 @@
+*~
+
+*.py[cod]
+*.log*
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+htmlcov
+*.out
+*.dif
+
+#PyTest
+.cache
+
+# Project
+version.py
+config_*
+
+# LSST Stack
+.sconf_temp
+.sconsign.dblite
+*.tests
+ups/*.cfgc
